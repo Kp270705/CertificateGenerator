@@ -76,11 +76,11 @@ class PDF(FPDF):
             print(f"\t\t(in gen pdf)hod path is: {hodPath}")
             finalTemplatePath = templatedesign(templatePath, logoPath, logo2Path, linepath, ccPath, hodPath)
 
-        # if certificateChoice == "Choice3":
-        #     linepath = f"./static/Images/CertificateEssentials/line1b.png"
-        #     text_color = 0
-        #     print(f"\t\t(in gen pdf)hod path is: {hodPath}")
-        #     finalTemplatePath = templatedesign(templatePath, logoPath, logo2Path, linepath, ccPath, hodPath)
+        if certificateChoice == "Choice3":
+            linepath = f"./static/Images/CertificateEssentials/line1b.png"
+            text_color = 0
+            print(f"\t\t(in gen pdf)hod path is: {hodPath}")
+            finalTemplatePath = templatedesign(templatePath, logoPath, logo2Path, linepath, ccPath, hodPath)
 
         print(f"\t\t\t{opertype} template generated. 👌 ")
         
@@ -455,7 +455,7 @@ def getData(name, sId, Duration, pulse, maxPulse, calories, course, sem, i, even
         TemplatePath = f"./static/Images/CertificateEssentials/template5.png"
         ccPath = f"./static/Images/CertificateEssentials/cc.png"
         hodPath = f"./static/Images/CertificateEssentials/hod.png"
-        logo2Path = f"./static/Images/CertificateEssentials/TechGeeksLogo.png"
+        logo2Path = f"./static/Images/CertificateEssentials/TechGeeksLogoColor.png"
         pdf.certificate3(name, sId, course, sem, eventname, orgName, certificateChoice, TemplatePath, logoPath, logo2Path, ccPath, hodPath, opertype)
         print(f"success")
 

@@ -19,10 +19,10 @@ def templatedesign(backgroundImagePath, logoPath, logo2Path, linepath, ccPath, h
     logo1_new_height = int(a4_height/6)
 
   else:
-    logo1_new_width = int(a4_width/3)
-    logo1_new_height = int(a4_height/5)
+    logo1_new_width = int(a4_width/4)
+    logo1_new_height = int(a4_height/6)
 
-  logo1_position = (20, 100) 
+  logo1_position = (10, 90) 
   logo_image1 = logo_image1.resize((logo1_new_width, logo1_new_height), Image.LANCZOS)
   print(f"Logo image resolution is: {logo_image1.size}")
 
@@ -37,7 +37,7 @@ def templatedesign(backgroundImagePath, logoPath, logo2Path, linepath, ccPath, h
     logo2_new_width = int(a4_width/3)
     logo2_new_height = int(a4_height/5)
 
-  logo2_position = (20, 100) 
+  logo2_position = (2800, 1950) 
   logo_image2 = logo_image2.resize((logo2_new_width, logo2_new_height), Image.LANCZOS)
   print(f"Logo2 image resolution is: {logo_image1.size}")
 
