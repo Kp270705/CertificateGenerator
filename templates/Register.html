@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    /* body {
+    
+        padding: 0;
+        margin: 0;
+
+        background-position: 0% 2%; 
+
+        background-position: 1% 1%;
+
+        font-family: Arial, sans-serif;
+
+        background-color: #f4f4f4;
+    } */
+
+    .hero {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .registerImage {
+
+        float: left;
+        display: inline;
+
+        margin-top: 5vh;
+        margin-left: 0%;
+
+        height: 60vh;
+
+    }
+
+    .RegisterContainer {
+        /* border: 2px solid red; */
+        float: left;
+        display: inline;
+
+        width: 100%;
+        max-width: 30%;
+
+        margin: 0 auto;
+        margin-top: 7vh;
+        margin-left: 15vw;
+
+        height: 70vh;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    button:active {
+        background-color: #004280;
+    }
+</style>
+
+<main>
+
+    <body>
+        <div class="hero">
+
+            <div class="registerImage">
+                <!-- <img src="./static/Images/AuthEssentials/signup.png" alt="image" height="570vh" width="650vw"> -->
+                <img src="./static/Images/AuthEssentials/signup3b.png" alt="image" height="570vh" width="650vw">
+            </div>
+
+            <div class="RegisterContainer">
+                <form action="/Register" method="POST">
+                    <h2>Register</h2>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+
+                    <button type="submit">Register</button>
+                </form>
+                <!-- <form action="/landing" method="post" class="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+                    <h2 class="text-gray-900 text-lg font-medium title-font mb-5">Login</h2>
+                    <div class="relative mb-4">
+                      <label for="full-name" class="leading-7 text-sm text-gray-600">Username</label>
+                      <input type="text" id="username" name="username" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                      <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+                      <input type="email" id="email" name="email" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                      <label for="email" class="leading-7 text-sm text-gray-600">password</label>
+                      <input type="password" id="password" name="password" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <button class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"><a href="/landing">Login</a></button>
+                    <p class="text-xs text-gray-500 mt-3">Don't have an account? <a href="/Register">Register here</a>.</p>
+                </form> -->
+            </div>
+
+        </div>
+    </body>
+</main>
+
+
+{% endblock %}
