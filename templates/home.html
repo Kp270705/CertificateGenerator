@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+/* General Styles */
+body {
+    font-family: "Arial", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Form Container */
+.formUploading {
+    margin-top: 2%;
+    padding: 2%;
+}
+
+/* Info Section */
+.infoSection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 2%;
+}
+
+.h1 {
+    font-family: "Merriweather", serif;
+    font-weight: 300;
+    text-align: center;
+}
+
+.label-class {
+    font-family: "Archivo Sans", sans-serif;
+    font-size: large;
+    font-weight: 600;
+    width: 100%;
+    margin: 1% 0;
+}
+
+.input-class {
+    width: 100%;
+    margin-top: 1%;
+    padding: 10px;
+    font-family: "Archivo Sans", sans-serif;
+    font-size: large;
+    font-weight: 300;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.image {
+    flex: 1;
+    max-width: 40%;
+    margin-right: 2%;
+}
+
+.image img {
+    width: 100%;
+    height: auto;
+}
+
+.homeInfoSection {
+    flex: 1;
+    max-width: 55%;
+    height: 75vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    padding: 2%;
+    box-shadow: 0 4px 8px rgba(132, 175, 239, 0.2), 0 6px 20px rgba(132, 175, 239, 0.2);
+    background-color: #fff;
+    margin-bottom: 2%;
+}
+
+select {
+    background-color: white;
+    color: black;
+}
+
+/* Button Styles */
+.opr_choice_btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    background-color: rgb(150, 214, 235);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.Gen{
+  background-color: lightgreen;
+  color: black;
+  border: 2px solid rgb(255, 255, 0);
+}
+
+.Prev{
+  background-color: rgb(253, 253, 120);
+  color: black;
+  border: 2px solid rgb(154, 255, 4);
+}
+
+.Gen:hover {
+  margin-left: 2%;
+  transform: scale(1.07);
+  background-color: rgb(29, 242, 29);
+  color: black;
+  border: 5px solid rgb(255, 255, 0);
+}
+
+.Prev:hover {
+  margin-right: 2%;
+  transform: scale(1.07);
+  background-color: rgb(252, 252, 0);
+  color: black;
+  border: 5px solid rgb(143, 238, 0);
+}
+
+/* Image Container */
+.imageContainer {
+    padding: 1%;
+    margin: 1vw auto;
+    margin-left: 2vw;
+    width: 95%;
+    scroll-behavior: smooth;
+    /* background-color: rgb(111, 212, 235); */
+  }
+  
+  .imageContainer:hover{
+    transform: scale(1.07);
+  }
+  
+  .imageList {
+    display: flex;
+    overflow-x: auto;
+
+    /* scrollbar-width: none; */
+    scroll-behavior: smooth;
+    overflow-x: scroll;
+    
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 1%;
+    list-style: none;
+    background-color: rgb(3, 98, 223);
+    border: 1px solid rgb(37, 37, 37);
+    box-shadow: 0 4px 8px rgba(132, 175, 239, 0.2), 0 6px 20px rgba(132, 175, 239, 0.2);
+}
+
+.imageList > li {
+    margin: 0 50px;
+    flex: 0 0 auto;
+    position: relative;
+}
+
+.imageList img {
+    display: block;
+    height: 200px;
+    width: 300px;
+    transition: transform 2.25s, margin-top 2.25s;
+}
+
+/* Radio Input */
+input[type="radio"] {
+    position: absolute;
+    top: 10px;
+    left: -4px;
+    z-index: 2;
+}
+
+/* Hover effect for non-mobile devices */
+@media (hover: hover) and (pointer: fine) {
+    .imageList img:hover {
+        transform: scale(1.25);
+        margin-bottom: 2vh;
+        margin-top: 2vh;
+        z-index: 1;
+    }
+}
+
+/* Touch effect for mobile devices */
+@media (hover: none) and (pointer: coarse) {
+    .imageList img:active {
+        transform: scale(1.10);
+        margin-bottom: 2vh;
+        z-index: 1;
+    }
+}
+
+/* Responsive Styles for Portrait Mode */
+@media (orientation: portrait) {
+    .infoSection {
+        flex-direction: column;
+        align-items: center;
+    }
+    .image {
+        order: 2;
+        max-width: 100%;
+        margin: 2% 0;
+    }
+    .homeInfoSection {
+        order: 3;
+        max-width: 100%;
+        height: auto;
+    }
+    .h1 {
+        order: 1;
+    }
+    .imageContainer {
+        order: 4;
+        width: 100%;
+    }
+}
+
+/* Responsive Styles for Landscape Mode */
+@media (orientation: landscape) {
+    .infoSection {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+</style>
+
+<main>
+    <div class="formUploading">
+      <form action="/FormData" method="post" enctype="multipart/form-data">
+        <h1 class="h1">Welcome to the Automated Certificate Generator</h1>
+        
+        <div class="infoSection">
+          <div class="image">
+            <img src="./static/Images/Home/office_workers2.gif" alt="working">
+          </div>
+          
+          <div class="homeInfoSection">
+            <label for="eventName" class="label-class">Enter the event name:</label>
+            <input type="text" name="eventName" id="eventName" class="input-class" required>
+  
+            <label for="OrgName" class="label-class">Enter the organization name:</label>
+            <input type="text" name="OrgName" id="OrgName" class="input-class" required>
+  
+            <label for="certificateType" class="label-class">Select certificate type:</label>
+            <select name="certificateType" id="certificateType" class="input-class" required>
+              <option value="" disabled selected>Select type</option>
+              <option value="of participation">Certificate of Participation</option>
+              <option value="of completion">Certificate of Completion</option>
+              <option value="of appreciation">Certificate of Appreciation</option>
+              <option value="of recognition">Certificate of Recognition</option>
+            </select>
+  
+            <label for="logo" class="label-class">Upload your organization's logo (in .png format):</label>
+            <input type="file" name="logo" id="logo" accept=".png" class="input-class">
+  
+            <label for="logo2" class="label-class">Upload your event's logo (in .png format):</label>
+            <input type="file" name="logo2" id="logo2" accept=".png" class="input-class">
+  
+            <label for="formfile" class="label-class">Upload your CSV file:</label>
+            <input type="file" name="file" id="formfile" class="input-class" accept=".csv, text/csv" multiple="multiple" required>
+  
+            <label for="Organizer1Desig" class="label-class">Enter Organizer 1 designation:</label>
+            <input type="text" name="Organizer1Desig" id="Organizer1Desig" class="input-class" required>
+  
+            <label for="organizer1" class="label-class">Upload Organizer 1's signature:</label>
+            <input type="file" name="organizer1" id="organizer1" accept=".png" class="input-class">
+  
+            <label for="Organizer2Desig" class="label-class">Enter Organizer 2 designation:</label>
+            <input type="text" name="Organizer2Desig" id="Organizer2Desig" class="input-class" required>
+  
+            <label for="organizer2" class="label-class">Upload Organizer 2's signature:</label>
+            <input type="file" name="organizer2" id="organizer2" accept=".png" class="input-class">
+          </div>
+        </div>
+        
+        <h1 class="h1">Select the template you want:</h1>
+        <div class="imageContainer">
+          <ul class="imageList">
+            <li class="listImage">
+              <input type="radio" id="choice1" name="certificate_choice" value="Choice1">
+              <label for="choice1">
+                <img src="static/Images/Home/demoCertImg1.png" alt="certificate image">
+              </label>
+            </li>
+            <li class="listImage">
+              <input type="radio" id="choice2" name="certificate_choice" value="Choice2">
+              <label for="choice2">
+                <img src="static/Images/Home/demoCertImg2.png" alt="certificate image">
+              </label>
+            </li>
+            <li class="listImage">
+              <input type="radio" id="choice3" name="certificate_choice" value="Choice3">
+              <label for="choice3">
+                <img src="static/Images/Home/demoCertImg3.png" alt="certificate image">
+              </label>
+            </li>
+            <li class="listImage">
+              <input type="radio" id="choice4" name="certificate_choice" value="Choice4">
+              <label for="choice4">
+                <img src="static/Images/Home/demoCertImg4.png" alt="certificate image">
+              </label>
+            </li>
+            <li class="listImage">
+              <input type="radio" id="choice5" name="certificate_choice" value="Choice5">
+              <label for="choice5">
+                <img src="static/Images/Home/demoCertImg5.png" alt="certificate image">
+              </label>
+            </li>
+          </ul>
+        </div>
+        
+        <div style="text-align: center;">
+          <button class="opr_choice_btn Prev" name="action" value="Preview" type="submit">Preview Certificates</button>
+          <button class="opr_choice_btn Gen" name="action" value="Generate" type="submit">Generate Certificates</button>
+
+        </div>
+      </form>
+    </div>
+</main>
+
+{% endblock %}
