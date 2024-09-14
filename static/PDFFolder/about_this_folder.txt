@@ -1,4 +1,0 @@
-This folder will store all final generated certificate PDFs.
-The text file "./static/PDFFolder/about_this_folder.txt" will be deleted automatically during certificate generation, so there's no need to worry about removing it.
-
-*** Do not Delete this folder. ***

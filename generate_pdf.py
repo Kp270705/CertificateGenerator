@@ -5,15 +5,15 @@ import datetime as dt
 import asyncio
 
 # fonts_truetype = f"/usr/share/fonts/truetype"
-fonts_truetype_Poppins = f"/usr/share/fonts/truetype/Poppins"
-fonts_truetype_Montserrat = f"/usr/share/fonts/truetype/Montserrat"
-fonts_truetype_edu = f"/usr/share/fonts/truetype/Edu_NSW_ACT_Foundation"
-fonts_truetype_meriweath = f"/usr/share/fonts/truetype/Merriweath"
+
+fonts_truetype_Poppins = f"./Fonts/Poppins"
+fonts_truetype_Montserrat = f"./Fonts/Montserrat"
+fonts_truetype_edu = f"./Fonts/Edu_NSW_ACT_Foundation"
+fonts_truetype_meriweath = f"./Fonts/Merriweather"
 
 # random:
-eufm = f"/usr/share/fonts/truetype/lyx"
-greatvibes = f"/usr/share/fonts/truetype/Great_Vibes"
-Playfair = f"/usr/share/fonts/truetype/Playfair"
+greatvibes = f"./Fonts/Great_Vibes"
+Playfair = f"./Fonts/Playfair_Display"
 
 
 FONTS = {
@@ -53,7 +53,6 @@ FONTS = {
         }, 
 
         "RandomFonts":{
-            "eufm10" : f"{eufm}/eufm10.ttf",
             "GreatVibeReg": f"{greatvibes}/GreatVibes-Regular.ttf" ,
             "Playfair" : f"{Playfair}/PlayfairDisplay-VariableFont_wght.ttf"
         }
@@ -75,6 +74,11 @@ def add_spacing(input_string, spacing):
     for char in input_string:
         spaced_string += char + " " * spacing
     return spaced_string
+
+def UpperCase(sentence):
+    sentence = sentence.upper()
+    return (sentence)
+
 
 class PDF(FPDF):
     
@@ -113,17 +117,16 @@ class PDF(FPDF):
         self.add_font("Merriweather-Regular", "", f"{FONTS['Merriweath']['MerriRegular']}", uni=1 )
 
         #random
-        self.add_font("eufm10", "", f"{FONTS['RandomFonts']['eufm10']}", uni=1 )
         self.add_font("GreatVibes-Regular", "", f"{FONTS['RandomFonts']['GreatVibeReg']}", uni=1 )
         self.add_font("PlayfairDisplay-VariableFont_wght", "", f"{FONTS['RandomFonts']['Playfair']}", uni=1 )    
         
 # certificate design1:-        
-    def certificate1(self, name, sId, receiver_mail, course, sem, date, eventname, orgname, i, certType, certificateChoice, opertype, text_color, organizer1_designation, organizer2_designation, PDF_bg):
+    def certificate1_2_3(self, name, sId, receiver_mail, course, sem, date, eventname, orgname, i, certType, certificateChoice, opertype, text_color, organizer1_designation, organizer2_designation, PDF_bg):
         print(f"in certificate1 method...(of gen_pdf)")
         # date= dt.date.today()
         date=date
         
-        # Add page with landscape orientation
+         # Add page with landscape orientation
         self.add_page(orientation="L")
         
         w = self.w
@@ -137,32 +140,14 @@ class PDF(FPDF):
         self.image(f"{PDF_bg}", 0, 0, w, h)
         print(f"image added successfully.")
 
+        # loading fonts
         print(f"...started adding font")
         self.load_fonts()
-        # #adding fonts:        
-        # # poppins:
-        # self.add_font('Poppins-ExtraBold', "B", f"{FONTS['Poppins']['poppinsExtraBold']}" , uni=True)
-        # self.add_font('Poppins-Bold', "B", f"{FONTS['Poppins']['poppinsBold']}" , uni=True)
-        # self.add_font('Poppins-Medium', "", f"{FONTS['Poppins']['poppinsMedium']}" , uni=True)
-        # self.add_font('Poppins-Light', "", f"{FONTS['Poppins']['poppinsExtraLight']}" , uni=True)
-        # self.add_font('Poppins-ExtraLight', "", f"{FONTS['Poppins']['poppinsLight']}" , uni=True)
-        # self.add_font('Poppins-Regular', "", f"{FONTS['Poppins']['poppinsRegular']}" , uni=True)
-        # self.add_font('Poppins-SemiBold', "B", f"{FONTS['Poppins']['poppinsSemiBold']}" , uni=True)
-
-        # # montserrat:
-        # self.add_font("Montserrat-Black", "", f"{FONTS['Montserrat']['MontserratBlack']}", uni=1 )
-        # self.add_font("Montserrat-Bold", "B", f"{FONTS['Montserrat']['MontserratBold']}", uni=1 )
-        # self.add_font("Montserrat-SemiBold", "B", f"{FONTS['Montserrat']['MontserratSemiBold']}", uni=1 )
-        # self.add_font("Montserrat-ExtraBold", "B", f"{FONTS['Montserrat']["MontserratExtraBold"]}", uni=1 )
-        # self.add_font("Montserrat-Regular", "", f"{FONTS['Montserrat']["MontserratRegular"]}", uni=1 )
-        # self.add_font("Montserrat-Thin", "", f"{FONTS['Montserrat']["MontserratThin"]}", uni=1 )
-        # self.add_font("Montserrat-Medium", "", f"{FONTS['Montserrat']["MontserratMedium"]}", uni=1 )
         print(f"all fonts added successfully...")
 
 
         # Set font
         self.ln(30)
-        # self.section1 = f"C E R T I F I C A T E\n"
         sec1 = f"CERTIFICATE"
         # spacedSection1 = add_spacing(sec1, 1)
         self.section1 = f"{sec1}"
@@ -197,15 +182,22 @@ class PDF(FPDF):
         self.set_font("Montserrat-Black", size=18, style="")
         self.multi_cell(277, 10, txt=self.section5, align='C')
         self.ln(10)
-        
-        # self.section6 = f"F O R   P A R T I C I P A T I N G  I N"
-        sec6 = f"FOR  PARTICIPATING  IN"
+
+        if certType == "of participation":
+            sec6 = f"For  participating  in"
+        if certType == "of completion":
+            sec6 = f"For  completing  the"
+        if certType == "of appreciation":
+            sec6 = f"For  completing  the"
+        if certType == "of recognition":
+            sec6 = f"For  completing  the"
+
         # spacedSection6 = add_spacing(sec6, 2)
-        self.section6 = f"{sec6}"
+        self.section6 = UpperCase(sec6)
         # self.set_font("Poppins-Bold", size=16, style="B")
         self.set_font("Montserrat-Regular", size=18)
         self.multi_cell(277, 8, txt=self.section6, align='C')
-        self.ln(10)
+        self.ln(8)
 
         spacedSection7 = add_spacing(eventname.upper(), 1)
         self.section7 = f"{spacedSection7}"
@@ -218,11 +210,13 @@ class PDF(FPDF):
         self.section8 = f"{spacedSection8}"
         self.set_font("Poppins-Regular", size=13)
         self.multi_cell(277, 7, txt=self.section8, align='C')
+        self.ln(1)
 
         self.section9 = f"{date}"
+        print(f"Date is: {date}")
         self.set_font("Poppins-ExtraBold", size=18, style="B")
         self.multi_cell(277, 10, txt=self.section9, align='C')
-        self.ln(21)  # Add some space after title
+        self.ln(20)  # Add some space after title
 
         auth1 = f"        {organizer1_designation}"
         auth2 = f"    {organizer2_designation}"
@@ -240,7 +234,7 @@ class PDF(FPDF):
 
 # -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    def certificate2(self, name, sId, receiver_mail, course, sem, date, eventname, orgname, i, certType, certificateChoice, opertype, text_color, organizer1_designation, organizer2_designation, PDF_bg):
+    def certificate4(self, name, sId, receiver_mail, course, sem, date, eventname, orgname, i, certType, certificateChoice, opertype, text_color, organizer1_designation, organizer2_designation, PDF_bg):
         print(f"in certificate2 method.")
         # date= dt.date.today()
         date = date
@@ -255,25 +249,7 @@ class PDF(FPDF):
         self.image(f"{PDF_bg}", 0, 0, w, h)
         print("image added successfully...")
 
-        # #adding fonts:        
-        # # poppins:
-        # self.add_font('Poppins-ExtraBold', "B", f"{FONTS['Poppins']['poppinsExtraBold']}" , uni=True)
-        # self.add_font('Poppins-Bold', "B", f"{FONTS['Poppins']['poppinsBold']}" , uni=True)
-        # self.add_font('Poppins-Medium', "", f"{FONTS['Poppins']['poppinsMedium']}" , uni=True)
-        # self.add_font('Poppins-Light', "", f"{FONTS['Poppins']['poppinsExtraLight']}" , uni=True)
-        # self.add_font('Poppins-ExtraLight', "", f"{FONTS['Poppins']['poppinsLight']}" , uni=True)
-        # self.add_font('Poppins-Regular', "", f"{FONTS['Poppins']['poppinsRegular']}" , uni=True)
-        # self.add_font('Poppins-SemiBold', "B", f"{FONTS['Poppins']['poppinsSemiBold']}" , uni=True)
-
-        # # montserrat:
-        # self.add_font("Montserrat-Black", "", f"{FONTS['Montserrat']['MontserratBlack']}", uni=1 )
-        # self.add_font("Montserrat-Bold", "B", f"{FONTS['Montserrat']['MontserratBold']}", uni=1 )
-        # self.add_font("Montserrat-SemiBold", "B", f"{FONTS['Montserrat']['MontserratSemiBold']}", uni=1 )
-        # self.add_font("Montserrat-ExtraBold", "B", f"{FONTS['Montserrat']["MontserratExtraBold"]}", uni=1 )
-        # self.add_font("Montserrat-Regular", "", f"{FONTS['Montserrat']["MontserratRegular"]}", uni=1 )
-        # self.add_font("Montserrat-Thin", "", f"{FONTS['Montserrat']["MontserratThin"]}", uni=1 )
-        # self.add_font("Montserrat-Medium", "", f"{FONTS['Montserrat']["MontserratMedium"]}", uni=1 )
-
+        # load fonts
         self.load_fonts()
 
         # Set font
@@ -317,19 +293,19 @@ class PDF(FPDF):
         # self.section6 = f"F O R   P A R T I C I P A T I N G  I N"
         if certType == "of participation":
             sec6 = f"For  participating  in"
-        if certType == "Certificate of completion":
+        if certType == "of completion":
             sec6 = f"For  completing  the"
         if certType == "of appreciation":
             sec6 = f"For  completing  the"
-        if certType == "of completion":
+        if certType == "of recognition":
             sec6 = f"For  completing  the"
             
         # spacedSection6 = add_spacing(sec6, 2)
         self.section6 = f"{sec6}"
         # self.set_font("Poppins-Bold", size=16, style="B")
-        self.set_font("Montserrat-Medium", size=15)
+        self.set_font("Montserrat-Medium", size=20)
         self.multi_cell(277, 8, txt=self.section6, align='C')
-        self.ln(1)
+        self.ln(4)
 
         spacedSection7 = add_spacing(eventname.upper(), 0)
         self.section7 = f"{spacedSection7}"
@@ -382,38 +358,8 @@ class PDF(FPDF):
         self.image(f"{PDF_bg}", 0, 0, w, h)
         print("Image added successfully...")
 
+        # load fonts:
         self.load_fonts()
-
-        # #adding fonts:        
-        # # poppins:
-        # self.add_font('Poppins-ExtraBold', "B", f"{FONTS['Poppins']['poppinsExtraBold']}" , uni=True)
-        # self.add_font('Poppins-Bold', "B", f"{FONTS['Poppins']['poppinsBold']}" , uni=True)
-        # self.add_font('Poppins-Medium', "", f"{FONTS['Poppins']['poppinsMedium']}" , uni=True)
-        # self.add_font('Poppins-Light', "", f"{FONTS['Poppins']['poppinsExtraLight']}" , uni=True)
-        # self.add_font('Poppins-ExtraLight', "", f"{FONTS['Poppins']['poppinsLight']}" , uni=True)
-        # self.add_font('Poppins-Regular', "", f"{FONTS['Poppins']['poppinsRegular']}" , uni=True)
-        # self.add_font('Poppins-SemiBold', "B", f"{FONTS['Poppins']['poppinsSemiBold']}" , uni=True)
-
-        # # montserrat:
-        # self.add_font("Montserrat-Black", "", f"{FONTS['Montserrat']['MontserratBlack']}", uni=1 )
-        # self.add_font("Montserrat-Bold", "B", f"{FONTS['Montserrat']['MontserratBold']}", uni=1 )
-        # self.add_font("Montserrat-SemiBold", "B", f"{FONTS['Montserrat']['MontserratSemiBold']}", uni=1 )
-        # self.add_font("Montserrat-ExtraBold", "B", f"{FONTS['Montserrat']["MontserratExtraBold"]}", uni=1 )
-        # self.add_font("Montserrat-Regular", "", f"{FONTS['Montserrat']["MontserratRegular"]}", uni=1 )
-        # self.add_font("Montserrat-Thin", "", f"{FONTS['Montserrat']["MontserratThin"]}", uni=1 )
-        # self.add_font("Montserrat-Medium", "", f"{FONTS['Montserrat']["MontserratMedium"]}", uni=1 )
-
-
-        # self.add_font("Merriweather-Black", "", f"{FONTS['Merriweath']['MerriBlack']}", uni=1 )
-        # self.add_font("Merriweather-Bold", "B", f"{FONTS['Merriweath']['MerriBold']}", uni=1 )
-        # self.add_font("Merriweather-Light", "B", f"{FONTS['Merriweath']['MerriLight']}", uni=1 )
-        # self.add_font("Merriweather-Regular", "", f"{FONTS['Merriweath']['MerriRegular']}", uni=1 )
-
-        # #random
-        # self.add_font("eufm10", "", f"{FONTS['RandomFonts']['eufm10']}", uni=1 )
-        # self.add_font("GreatVibes-Regular", "", f"{FONTS['RandomFonts']['GreatVibeReg']}", uni=1 )
-        # self.add_font("PlayfairDisplay-VariableFont_wght", "", f"{FONTS['RandomFonts']['Playfair']}", uni=1 )
-
 
         # Set font
         self.ln(20)
@@ -457,11 +403,11 @@ class PDF(FPDF):
 
         if certType == "of participation":
             sec6 = f"For  participating  in"
-        if certType == "Certificate of completion":
+        if certType == "of completion":
             sec6 = f"For  completing  the"
         if certType == "of appreciation":
             sec6 = f"For  completing  the"
-        if certType == "of completion":
+        if certType == "of recognition":
             sec6 = f"For  completing  the"
 
         self.section6 = f"{sec6}"
@@ -523,29 +469,10 @@ class PDF(FPDF):
         left_margin = 20 
         right_margin = self.w - left_margin  
 
-        # adding fonts:
+        # load fonts:
+        self.load_fonts()
 
-        # poppins:
-        self.add_font('Poppins-ExtraBold', "B", f"{FONTS['Poppins']['poppinsExtraBold']}" , uni=True)
-        self.add_font('Poppins-Bold', "B", f"{FONTS['Poppins']['poppinsBold']}" , uni=True)
-        self.add_font('Poppins-Medium', "", f"{FONTS['Poppins']['poppinsMedium']}" , uni=True)
-        self.add_font('Poppins-Light', "", f"{FONTS['Poppins']['poppinsExtraLight']}" , uni=True)
-        self.add_font('Poppins-ExtraLight', "", f"{FONTS['Poppins']['poppinsLight']}" , uni=True)
-        self.add_font('Poppins-Regular', "", f"{FONTS['Poppins']['poppinsRegular']}" , uni=True)
-        self.add_font('Poppins-SemiBold', "B", f"{FONTS['Poppins']['poppinsSemiBold']}" , uni=True)
-
-        # montserrat:
-        self.add_font("Montserrat-Black", "", f"{FONTS['Montserrat']['MontserratBlack']}", uni=1 )
-        self.add_font("Montserrat-Bold", "B", f"{FONTS['Montserrat']['MontserratBold']}", uni=1 )
-        self.add_font("Montserrat-SemiBold", "B", f"{FONTS['Montserrat']['MontserratSemiBold']}", uni=1 )
-        self.add_font("Montserrat-ExtraBold", "B", f"{FONTS['Montserrat']["MontserratExtraBold"]}", uni=1 )
-        self.add_font("Montserrat-Regular", "", f"{FONTS['Montserrat']["MontserratRegular"]}", uni=1 )
-        self.add_font("Montserrat-Thin", "", f"{FONTS['Montserrat']["MontserratThin"]}", uni=1 )
-        self.add_font("Montserrat-Medium", "", f"{FONTS['Montserrat']["MontserratMedium"]}", uni=1 )
-
-        
         self.ln(96)
-
         spacedSection4 = add_spacing(name.upper(),0)
         self.section4 = f"{spacedSection4}"
         self.set_font("Montserrat-Bold", size=30, style="B")
@@ -616,12 +543,12 @@ async def getData(name, sId, receiverMail, course, sem, date, i, eventname, orgN
             fontcolor = 220
         if certificateChoice == "Choice2" or certificateChoice == "Choice3":
             fontcolor = 0
-        pdf.certificate1(name, sId, receiverMail, course, sem, date, eventname, orgName, i, certType, certificateChoice, operType, fontcolor, organizer1_designation, organizer2_designation, PDF_TemplatePath)
+        pdf.certificate1_2_3(name, sId, receiverMail, course, sem, date, eventname, orgName, i, certType, certificateChoice, operType, fontcolor, organizer1_designation, organizer2_designation, PDF_TemplatePath)
         print(f"success")
 
     if certificateChoice == "Choice4":
         fontcolor = 220
-        pdf.certificate2(name, sId, receiverMail, course, sem, date, eventname, orgName, i, certType, certificateChoice, operType, fontcolor, organizer1_designation, organizer2_designation, PDF_TemplatePath)
+        pdf.certificate4(name, sId, receiverMail, course, sem, date, eventname, orgName, i, certType, certificateChoice, operType, fontcolor, organizer1_designation, organizer2_designation, PDF_TemplatePath)
         print(f"course: {course}")
 
     if certificateChoice == "Choice5":
