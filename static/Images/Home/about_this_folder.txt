@@ -1,5 +1,0 @@
-This folder contains the images used on the homepage (main page). It includes the Image/GIF image for the homepage along with the user form where users input their required information. 
-
-*** Do not delete this folder. ***
-
-Pardon me, for creating two folders for same purpose.(for home page Image/GIF).  😉 😉 😉 
