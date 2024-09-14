@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-from passwords_info import mail2_pass
+from PyhtonTasksScripts.passwords_info import mail2_pass
 
 async def send_mails(email_sender, email_receiver, file_path, eventname, cert_type):
 

@@ -512,6 +512,7 @@ class PDF(FPDF):
 
 async def getData(name, sId, receiverMail, course, sem, date, i, eventname, orgName, certType, certificateChoice, operType, organizer1_designation, organizer2_designation, PDF_TemplatePath):
     
+    print(f"i is: {i}")
     # Create PDFFolder if it doesn't exist
     if i == 1:
         if os.path.exists("./static/PDFFolder"):
@@ -542,7 +543,7 @@ async def getData(name, sId, receiverMail, course, sem, date, i, eventname, orgN
     pdf.output(f"./static/PDFFolder/{operType}Certificate{i}.pdf")
 
     if operType == "Generate":
-        from sendingMails import send_mails
+        from PyhtonTasksScripts.sendingMails import send_mails
         print(f"\nIn sending  mails")
         await send_mails(f"kunalpathak4774@gmail.com", receiverMail, f"./static/PDFFolder/{operType}Certificate{i}.pdf", eventname, certType)
     
