@@ -1,52 +1,31 @@
 from flask import Flask, render_template, jsonify, request, flash, redirect, session
 from werkzeug.utils import secure_filename
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 import asyncio
-
-# from flask_uploads import UploadSet, IMAGES, configure_uploads
 import os, uuid, bcrypt
 
 
-from PyhtonTasksScripts.ProcessData import ProcessData
+from PythonTasksScripts.ProcessData import ProcessData
+from db.extensions import db, migrate 
+from db.AuthDb import User 
 
 
 UPLOAD_FOLDER = 'Uploads'
-
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'csv', 'xlsx'}
 
+
 app=Flask(__name__)
+# ============================
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+db.init_app(app)  # Initialize app with db
+migrate.init_app(app, db)
+
+# ============================
 
 app.secret_key = uuid.uuid4().hex
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
-# defining db class: 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=1)
-    name = db.Column(db.String(150), nullable=0)
-    password = db.Column(db.String(150), nullable=0, unique=1)
-    confirm_password = db.Column(db.String(150), nullable=0, unique=1)
-    email = db.Column(db.String(150), nullable=0)
-    # fav_color = db.Column(db.String(30), nullable=1)
-    
-    print(f" confirm pass{confirm_password}")
-    
-    # used to initialise the db's data:
-    def __init__(self, name, email, password, confirm_password):
-        self.name = name
-        self.email = email
-        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode()
-        self.confirm_password = confirm_password
-        # self.fav_color = fav_color
-
-    # used to check password:
-    def check_password(self, pasword):
-        return bcrypt.checkpw(pasword.encode('utf-8'), self.password.encode('utf-8'))
 
 with app.app_context():
     db.create_all()
@@ -141,6 +120,7 @@ def upload_file():
 def showcsv(csvData):
     return render_template("yourData.html", data=csvData)
 
+
 # use to navigate to registration page:
 @app.route("/Register", methods=["GET", "POST"])
 def Register():
@@ -193,12 +173,14 @@ def Loggin():
 
     return render_template("LogginT.html")
 
+
 # home page: 
 @app.route("/home", methods=['GET', 'POST'])
 def home():
     if request.method == "POST":
         return render_template("home.html")
     return render_template("home.html")
+
 
 @app.route("/about")
 def about():
